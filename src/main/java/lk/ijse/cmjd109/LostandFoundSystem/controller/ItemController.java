@@ -13,7 +13,7 @@ import java.util.List;
 public class ItemController {
     @GetMapping("/health")
     public String healthTest(){
-        return "SYSTEM OKAY";
+        return "Item SYSTEM OKAY";
     }
     @PostMapping()
     public ResponseEntity<Void> addItem(@RequestBody ItemDTO itemDTO) {
