@@ -9,5 +9,5 @@ public interface ItemService {
     void deleteItem(String itemId);
     void updateItem(String itemId,ItemDTO itemDTO);
     ItemDTO getselectedItem(String itemId);
-    List<ItemDTO> getallItems(ItemDTO itemDTO);
+    List<ItemDTO> getallItems();
 }
