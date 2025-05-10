@@ -1,6 +1,7 @@
 package lk.ijse.cmjd109.LostandFoundSystem.controller;
 
 import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,21 @@ public class UserController {
     @GetMapping("/health")
     public String healthTest(){
         return "User SYSTEM OKAY";
+    }
+    @PostMapping()
+    public ResponseEntity<Void> addUser(@RequestBody UserDTO userDTO) {
+        System.out.println(userDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    @GetMapping("{userId}")
+    public ResponseEntity<UserDTO> getSelectedUser(@PathVariable String userId){
+        System.out.println("Get Selected Userss for "+userId);
+        return ResponseEntity.ok(new UserDTO(
+                "U001",
+                "Username",
+                "password",
+                "Staff"
+        ));
     }
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
