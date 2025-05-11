@@ -2,6 +2,7 @@ package lk.ijse.cmjd109.LostandFoundSystem.service.impl;
 
 import lk.ijse.cmjd109.LostandFoundSystem.dto.ItemDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.service.ItemService;
+import lk.ijse.cmjd109.LostandFoundSystem.util.UtilData;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 public class ItemServiceIMPL implements ItemService {
     @Override
     public void addItem(ItemDTO itemDTO) {
-        System.out.println("Add item from ServiceIMPL");
+        itemDTO.setId(UtilData.generateItemId());
+        System.out.println(itemDTO);
     }
 
     @Override

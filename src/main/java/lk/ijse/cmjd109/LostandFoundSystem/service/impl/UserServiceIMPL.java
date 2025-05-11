@@ -1,10 +1,8 @@
 package lk.ijse.cmjd109.LostandFoundSystem.service.impl;
-
 import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.service.UserService;
-import org.springframework.http.ResponseEntity;
+import lk.ijse.cmjd109.LostandFoundSystem.util.UtilData;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,8 @@ import java.util.List;
 public class UserServiceIMPL implements UserService {
     @Override
     public void addUser(UserDTO userDTO) {
-        System.out.println("Add user from ServiceIMPL");
+        userDTO.setId(UtilData.generateUserId());
+        System.out.println(userDTO);
 
     }
 

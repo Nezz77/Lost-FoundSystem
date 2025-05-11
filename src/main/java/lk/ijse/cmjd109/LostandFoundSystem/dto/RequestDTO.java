@@ -12,4 +12,7 @@ public class RequestDTO {
     private String userId;
     private String itemId;
     private String status; // PENDING, APPROVED, REJECTED
+    private String requesteddate;
+    private String requestedtime;
+
 }
