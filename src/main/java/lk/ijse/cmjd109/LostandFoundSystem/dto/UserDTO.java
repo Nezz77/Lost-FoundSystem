@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class  UserDTO {
     private String id;
     private String username;
     private String password; // For registration only; exclude in responses
