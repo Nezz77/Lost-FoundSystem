@@ -1,90 +1,80 @@
 package lk.ijse.cmjd109.LostandFoundSystem.service.impl;
 
+import lk.ijse.cmjd109.LostandFoundSystem.dao.RequestDao;
+import lk.ijse.cmjd109.LostandFoundSystem.dto.ItemDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.dto.RequestDTO;
+import lk.ijse.cmjd109.LostandFoundSystem.entities.ItemEntity;
+import lk.ijse.cmjd109.LostandFoundSystem.entities.RequestEntity;
+import lk.ijse.cmjd109.LostandFoundSystem.exception.ItemNotFoundException;
+import lk.ijse.cmjd109.LostandFoundSystem.exception.RequestNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.RequestService;
+import lk.ijse.cmjd109.LostandFoundSystem.util.EntityDTOConvert;
 import lk.ijse.cmjd109.LostandFoundSystem.util.UtilData;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class RequestServiceIMPL implements RequestService {
+
+    private final RequestDao requestDao;
+    private final EntityDTOConvert entityDTOConvert;
 
     @Override
     public void addRequest(RequestDTO requestDTO) {
         requestDTO.setRequestId(UtilData.generateRequestId());
-        requestDTO.setRequesteddate(String.valueOf(UtilData.generateTodayDate()));
-        requestDTO.setRequestedtime(String.valueOf(UtilData.generateCurrentTime()));
+        requestDTO.setRequesteddate(java.time.LocalDate.now());
+        requestDTO.setRequestedtime(LocalTime.now().truncatedTo(ChronoUnit.SECONDS));
         System.out.println(requestDTO);
-
+        var requestEntity=entityDTOConvert.convertRequestDTOToRequestEntity(requestDTO);
+        requestDao.save(requestEntity);
+        //pass to dao
     }
 
     @Override
     public void deleteRequest(String requestId) {
-
+        Optional<RequestEntity> foundRequest=requestDao.findById(requestId);
+        if (!foundRequest.isPresent()){
+            throw new RequestNotFoundException("Not Listed");
+        }
+        requestDao.deleteById(requestId);
     }
 
     @Override
     public void updateRequest(String requestId, RequestDTO requestDTO) {
+        Optional<RequestEntity> foundRequest=requestDao.findById(requestId);
+        if (!foundRequest.isPresent()){
+            throw new RequestNotFoundException("Not Listed");
+        }
+        foundRequest.get().setStatus(requestDTO.getStatus());
+        //  Automatically set the current date and time when updating
+        foundRequest.get().setRequesteddate(LocalDate.now());
+        foundRequest.get().setRequestedtime(LocalTime.now().truncatedTo(ChronoUnit.SECONDS));
+
 
     }
 
     @Override
     public RequestDTO getselectedRequest(String requestId) {
-        return (new RequestDTO(
-                "R001",
-                "U001",
-                "I001",
-                "PENDING",
-                "date1",
-                "time1"
+        Optional<RequestEntity> foundRequest =requestDao.findById(requestId);
+        if (!foundRequest.isPresent()){
+            throw new RequestNotFoundException("Selected Book Not Listed");
+        }
+        return entityDTOConvert.convertRequestEntityToRequestDTO(requestDao.getReferenceById(requestId));
 
-        ));
     }
 
     @Override
-    public List<RequestDTO> getallRequest() {
-        List<RequestDTO> requestList=new ArrayList<>();
-        requestList.add(new RequestDTO(
-                "R001",
-                "U001",
-                "I001",
-                "PENDING",
-                "date2",
-                "time2"
-        ));
-        requestList.add(new RequestDTO(
-                "R002",
-                "U002",
-                "I004",
-                "APPROVED",
-                "date3",
-                "time3"
-        ));
-        requestList.add(new RequestDTO(
-                "R003",
-                "U003",
-                "I002",
-                "REJECTED",
-                "date4",
-                "time4"
-        ));
-        requestList.add(new RequestDTO(
-                "R004",
-                "U004",
-                "I005",
-                "PENDING",
-                "date5",
-                "time5"
-        ));
-        requestList.add(new RequestDTO(
-                "R005",
-                "U001",
-                "I003",
-                "APPROVED",
-                "date6",
-                "time6"
-        ));
-        return requestList;
+    public List<RequestDTO> getallRequests() {
+        return entityDTOConvert.toRequestDTOList(requestDao.findAll());
     }
 }

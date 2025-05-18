@@ -9,5 +9,5 @@ public interface RequestService {
     void deleteRequest(String requestId);
     void updateRequest(String requestId, RequestDTO requestDTO);
     RequestDTO getselectedRequest(String requestId);
-    List<RequestDTO> getallRequest();
+    List<RequestDTO> getallRequests();
 }

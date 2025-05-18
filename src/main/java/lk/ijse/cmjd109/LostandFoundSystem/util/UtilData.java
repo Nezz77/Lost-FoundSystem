@@ -22,8 +22,8 @@ public class UtilData {
     public static LocalDate generateTodayDate(){
         return LocalDate.now();
     }
-    public static Time generateCurrentTime(){
-        return Time.valueOf(LocalTime.now());
+    public static LocalTime generateCurrentTime(){
+        return Time.valueOf(now()).toLocalTime();
     }
 
 }

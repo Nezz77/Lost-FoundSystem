@@ -1,6 +1,9 @@
 package lk.ijse.cmjd109.LostandFoundSystem.controller;
 
+import lk.ijse.cmjd109.LostandFoundSystem.dto.ItemDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
+import lk.ijse.cmjd109.LostandFoundSystem.exception.ItemNotFoundException;
+import lk.ijse.cmjd109.LostandFoundSystem.exception.UserNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,25 +29,47 @@ public class UserController {
         userService.addUser(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String userIdValue) {
-        userService.deleteUser(userIdValue);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@RequestParam ("userIdKey") String userIdValue) {
+        try {
+            userService.deleteUser(userIdValue);
+            return ResponseEntity.noContent().build();
+        }catch (UserNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    @PatchMapping(value = "/{userId}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateUser(@PathVariable String userId, @RequestBody UserDTO userDTO) {
-        userService.updateUser(userId,userDTO);
-        return ResponseEntity.noContent().build();
-    }
-    @GetMapping("{userId}")
-    public ResponseEntity<UserDTO> getSelectedUser(@PathVariable String userId){
-       return ResponseEntity.ok(userService.getselectedUser(userId));
-
+    @PatchMapping
+    public ResponseEntity<Void> updateUser(@RequestParam ("userId") String userId,@RequestBody UserDTO userDTO) {
+        try {
+            userService.updateUser(userId,userDTO);
+            return ResponseEntity.noContent().build();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getallUser());
+    public ResponseEntity<UserDTO> getSelectedUser(@RequestParam String userId){
+        try {
+            return ResponseEntity.ok(userService.getselectedUser(userId));
+        }catch (UserNotFoundException e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
-
-
+    @GetMapping(value = "getallusers")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+            return ResponseEntity.ok(userService.getallUsers());
+    }
 }
