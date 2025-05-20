@@ -1,6 +1,7 @@
 package lk.ijse.cmjd109.LostandFoundSystem.controller;
 import lk.ijse.cmjd109.LostandFoundSystem.dto.RequestDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.exception.ItemNotFoundException;
+import lk.ijse.cmjd109.LostandFoundSystem.exception.RequestNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.RequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class RequestController {
         try {
             requestService.deleteRequest(requestIdValue);
             return ResponseEntity.noContent().build();
-        }catch (ItemNotFoundException e){
+        }catch (RequestNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -48,7 +49,7 @@ public class RequestController {
         try {
             requestService.updateRequest(requestId, requestDTO);
             return ResponseEntity.noContent().build();
-        } catch (ItemNotFoundException e) {
+        } catch (RequestNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -62,7 +63,7 @@ public class RequestController {
     public ResponseEntity<RequestDTO> getSelectedRequest(@RequestParam String requestId) {
         try {
             return ResponseEntity.ok(requestService.getselectedRequest(requestId));
-        } catch (ItemNotFoundException e) {
+        } catch (RequestNotFoundException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {

@@ -55,6 +55,7 @@ public class RequestServiceIMPL implements RequestService {
         if (!foundRequest.isPresent()){
             throw new RequestNotFoundException("Not Listed");
         }
+
         foundRequest.get().setStatus(requestDTO.getStatus());
         //  Automatically set the current date and time when updating
         foundRequest.get().setRequesteddate(LocalDate.now());
@@ -78,3 +79,4 @@ public class RequestServiceIMPL implements RequestService {
         return entityDTOConvert.toRequestDTOList(requestDao.findAll());
     }
 }
+////////Exception handle
