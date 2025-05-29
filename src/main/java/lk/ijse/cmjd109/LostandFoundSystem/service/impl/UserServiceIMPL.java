@@ -21,12 +21,13 @@ public class UserServiceIMPL implements UserService {
     private final UserDao userDao;
     private final EntityDTOConvert entityDTOConvert;
     @Override
-    public void addUser(UserDTO userDTO) {
+    public UserDTO addUser(UserDTO userDTO) {
         userDTO.setId(UtilData.generateUserId());
         System.out.println(userDTO);
         var userEntity=entityDTOConvert.convertUserDTOTOUserEntity(userDTO);
         userDao.save(userEntity);
         //pass to dao
+        return userDTO;
     }
 
     @Override

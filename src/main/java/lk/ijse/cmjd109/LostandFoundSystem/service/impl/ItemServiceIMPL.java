@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +24,13 @@ public class ItemServiceIMPL implements ItemService {
     private final EntityDTOConvert entityDTOConvert;
 
     @Override
-    public void addItem(ItemDTO itemDTO) {
+    public ItemDTO addItem(ItemDTO itemDTO) {
         itemDTO.setId(UtilData.generateItemId());
         System.out.println(itemDTO);
         var itemEntity=entityDTOConvert.convertItemDTOToItemEntity(itemDTO);
         itemDao.save(itemEntity);
         //pass to dao
+        return itemDTO;
     }
 
     @Override

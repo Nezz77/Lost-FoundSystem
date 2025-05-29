@@ -1,6 +1,5 @@
 package lk.ijse.cmjd109.LostandFoundSystem.controller;
 import lk.ijse.cmjd109.LostandFoundSystem.dto.RequestDTO;
-import lk.ijse.cmjd109.LostandFoundSystem.exception.ItemNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.exception.RequestNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.RequestService;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,10 @@ public class RequestController {
         return "Request SYSTEM OKAY";
     }
 
-    @PostMapping()
-    public ResponseEntity<Void> addRequest(@RequestBody RequestDTO requestDTO) {
-        requestService.addRequest(requestDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<RequestDTO> addRequest(@RequestBody RequestDTO requestDTO) {
+        RequestDTO savedItem = requestService.addRequest(requestDTO); // ✅ Service returns saved item
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedItem); // ✅ Send to frontend
     }
 
     @DeleteMapping

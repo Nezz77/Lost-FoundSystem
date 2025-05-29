@@ -22,13 +22,13 @@ public class ItemController {
         return "Item SYSTEM OKAY";
     }
 
-    @PostMapping()
-    public ResponseEntity<Void> addItem(@RequestBody ItemDTO itemDTO) {
-        itemService.addItem(itemDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
+        ItemDTO savedItem = itemService.addItem(itemDTO); // ✅ Service returns saved item
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedItem); // ✅ Send to frontend
     }
     @DeleteMapping
-    public ResponseEntity<Void> deleteItem(@RequestParam("itemIdKey") String itemIdValue){
+    public ResponseEntity<Void> deleteItem(@RequestParam("itemId") String itemIdValue){
         try {
             itemService.deleteItem(itemIdValue);
             return ResponseEntity.noContent().build();

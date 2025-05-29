@@ -1,13 +1,10 @@
 package lk.ijse.cmjd109.LostandFoundSystem.controller;
 
-import lk.ijse.cmjd109.LostandFoundSystem.dto.ItemDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
-import lk.ijse.cmjd109.LostandFoundSystem.exception.ItemNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.exception.UserNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +21,14 @@ public class UserController {
     public String healthTest(){
         return "User SYSTEM OKAY";
     }
-    @PostMapping()
-    public ResponseEntity<Void> addUser(@RequestBody UserDTO userDTO) {
-        userService.addUser(userDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        UserDTO savedUser = userService.addUser(userDTO); // ✅ Service returns saved item
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser); // ✅ Send to frontend
     }
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@RequestParam ("userIdKey") String userIdValue) {
+    public ResponseEntity<Void> deleteUser(@RequestParam ("userId") String userIdValue) {
         try {
             userService.deleteUser(userIdValue);
             return ResponseEntity.noContent().build();
