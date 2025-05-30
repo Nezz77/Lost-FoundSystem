@@ -1,6 +1,6 @@
 package lk.ijse.cmjd109.LostandFoundSystem.service;
 
-import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
+import lk.ijse.cmjd109.LostandFoundSystem.dto.secure.UserDTO;
 
 import java.util.List;
 

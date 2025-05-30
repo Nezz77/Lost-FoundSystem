@@ -1,6 +1,6 @@
 package lk.ijse.cmjd109.LostandFoundSystem.controller;
 
-import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
+import lk.ijse.cmjd109.LostandFoundSystem.dto.secure.UserDTO;
 import lk.ijse.cmjd109.LostandFoundSystem.exception.UserNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.UserService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package lk.ijse.cmjd109.LostandFoundSystem.service.impl;
-import lk.ijse.cmjd109.LostandFoundSystem.dao.UserDao;
-import lk.ijse.cmjd109.LostandFoundSystem.dto.UserDTO;
-import lk.ijse.cmjd109.LostandFoundSystem.entities.UserEntity;
+import lk.ijse.cmjd109.LostandFoundSystem.dao.secure.UserDao;
+import lk.ijse.cmjd109.LostandFoundSystem.dto.secure.UserDTO;
+import lk.ijse.cmjd109.LostandFoundSystem.entities.secure.UserEntity;
 import lk.ijse.cmjd109.LostandFoundSystem.exception.UserNotFoundException;
 import lk.ijse.cmjd109.LostandFoundSystem.service.UserService;
 import lk.ijse.cmjd109.LostandFoundSystem.util.EntityDTOConvert;
@@ -22,7 +22,7 @@ public class UserServiceIMPL implements UserService {
     private final EntityDTOConvert entityDTOConvert;
     @Override
     public UserDTO addUser(UserDTO userDTO) {
-        userDTO.setId(UtilData.generateUserId());
+        userDTO.setUserid(UtilData.generateUserId());
         System.out.println(userDTO);
         var userEntity=entityDTOConvert.convertUserDTOTOUserEntity(userDTO);
         userDao.save(userEntity);
@@ -45,7 +45,9 @@ public class UserServiceIMPL implements UserService {
         if (!foundUser.isPresent()){
             throw new UserNotFoundException("Not Listed");
         }
-        foundUser.get().setUsername(userDTO.getUsername());
+        foundUser.get().setFirstName(userDTO.getFirstName());
+        foundUser.get().setLastName(userDTO.getLastName());
+        foundUser.get().setEmail(userDTO.getEmail());
         foundUser.get().setPassword(userDTO.getPassword());
         foundUser.get().setRole(userDTO.getRole());
 
