@@ -40,6 +40,17 @@ public class EntityDTOConvert {
         return modelMapper.map(requestEntityList,new TypeToken<List<RequestDTO>>(){}.getType());
     }
     //user
+    public UserEntity convertUserDTOTOUserEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO,UserEntity.class);
+    }
+    public UserDTO convertUserEntityToUserDTO(UserEntity userEntity) {
+        return modelMapper.map(userEntity,UserDTO.class);
+    }
+    public List<UserDTO> toUserDTOList(List<UserEntity> userEntityList) {
+        return modelMapper.map(userEntityList,new TypeToken<List<RequestDTO>>(){}.getType());
+    }
+    //
+
 
     public UserDTO toUserDTOList(UserEntity userEntity) {
         return modelMapper.map(userEntity,UserDTO.class);

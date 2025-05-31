@@ -25,5 +25,5 @@ public class UtilData {
     public static LocalTime generateCurrentTime(){
         return Time.valueOf(now()).toLocalTime();
     }
-
+    //
 }
