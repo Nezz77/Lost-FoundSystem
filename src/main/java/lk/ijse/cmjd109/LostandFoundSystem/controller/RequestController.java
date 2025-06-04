@@ -29,9 +29,9 @@ public class RequestController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteRequest(@RequestParam("requestIdKey") String requestIdValue) {
+    public ResponseEntity<Void> deleteRequest(@RequestParam("requestId") String requestId) {
         try {
-            requestService.deleteRequest(requestIdValue);
+            requestService.deleteRequest(requestId);
             return ResponseEntity.noContent().build();
         }catch (RequestNotFoundException e){
             e.printStackTrace();

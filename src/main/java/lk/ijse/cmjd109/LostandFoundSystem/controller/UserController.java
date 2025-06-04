@@ -28,9 +28,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser); // ✅ Send to frontend
     }
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@RequestParam ("userId") String userIdValue) {
+    public ResponseEntity<Void> deleteUser(@RequestParam ("userId") String userId) {
         try {
-            userService.deleteUser(userIdValue);
+            userService.deleteUser(userId);
             return ResponseEntity.noContent().build();
         }catch (UserNotFoundException e){
             e.printStackTrace();
