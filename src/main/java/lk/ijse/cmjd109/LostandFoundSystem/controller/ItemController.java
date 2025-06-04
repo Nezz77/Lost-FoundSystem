@@ -24,8 +24,14 @@ public class ItemController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
-        ItemDTO savedItem = itemService.addItem(itemDTO); // ✅ Service returns saved item
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedItem); // ✅ Send to frontend
+        try {
+            ItemDTO savedItem = itemService.addItem(itemDTO); // ✅ Service returns saved item
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedItem); // ✅ Send to frontend
+        }catch (ItemNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
     @DeleteMapping
     public ResponseEntity<Void> deleteItem(@RequestParam("itemId") String itemIdValue){
@@ -44,6 +50,7 @@ public class ItemController {
     @PatchMapping
     public ResponseEntity<Void> updateItem(@RequestParam ("itemId") String itemId,@RequestBody ItemDTO itemDTO){
         try {
+            System.out.println("RECEIVED ITEM DTO"+itemDTO);
             itemService.updateItem(itemId,itemDTO);
             return ResponseEntity.noContent().build();
         } catch (ItemNotFoundException e) {

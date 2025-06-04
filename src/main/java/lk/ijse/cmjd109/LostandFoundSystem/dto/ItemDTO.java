@@ -16,6 +16,6 @@ public class ItemDTO implements Serializable {
     private String description;
     private String date;
     private String time;
-    private String status;
+    private ItemStatus itemStatus;
 
 }

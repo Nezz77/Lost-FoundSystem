@@ -1,9 +1,7 @@
 package lk.ijse.cmjd109.LostandFoundSystem.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lk.ijse.cmjd109.LostandFoundSystem.dto.ItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,5 +27,6 @@ public class ItemEntity {
     private String time;
 
     @Column(nullable = false)
-    private String status; // LOST, FOUND, CLAIMED
+    @Enumerated(EnumType.STRING)
+    private ItemStatus itemStatus; // LOST, FOUND, CLAIMED
 }

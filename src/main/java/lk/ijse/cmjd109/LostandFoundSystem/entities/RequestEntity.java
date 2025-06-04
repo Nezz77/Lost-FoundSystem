@@ -1,9 +1,8 @@
 package lk.ijse.cmjd109.LostandFoundSystem.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import lk.ijse.cmjd109.LostandFoundSystem.dto.RequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,9 +24,12 @@ public class RequestEntity {
     private String itemId;
 
     @Column(nullable = false)
-    private String status; // PENDING, APPROVED, REJECTED
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus; // PENDING, APPROVED, REJECTED
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate requesteddate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     private LocalTime requestedtime;
 }

@@ -53,7 +53,7 @@ public class RequestServiceIMPL implements RequestService {
             throw new RequestNotFoundException("Not Listed");
         }
 
-        foundRequest.get().setStatus(requestDTO.getStatus());
+        foundRequest.get().setRequestStatus(requestDTO.getRequestStatus());
         //  Automatically set the current date and time when updating
         foundRequest.get().setRequesteddate(LocalDate.now());
         foundRequest.get().setRequestedtime(LocalTime.now().truncatedTo(ChronoUnit.SECONDS));

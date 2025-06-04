@@ -52,7 +52,7 @@ public class ItemServiceIMPL implements ItemService {
         foundItem.get().setDescription(itemDTO.getDescription());
         foundItem.get().setDate(itemDTO.getDate());
         foundItem.get().setTime(itemDTO.getTime());
-        foundItem.get().setStatus(itemDTO.getStatus());
+        foundItem.get().setItemStatus(itemDTO.getItemStatus());
 
 
     }

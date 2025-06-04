@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name= "user")
 public class UserEntity implements Serializable, UserDetails {
     @Id
-    private String userid;
+    private String Userid;
     private String firstName;
     private String lastName;
     @Column(unique = true, nullable = false)

@@ -58,6 +58,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth->
                         auth.requestMatchers( "/api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated());
+//                                    .anyRequest().permitAll());
         http.authenticationProvider(daoAuthenticationProvider());
         http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
